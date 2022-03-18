@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <h1>Voici la liste de tous les articles disponibles</h1>
+    <a href="{{ path('app_article_new') }}" class="btn btn-outline-success">+ Nouvel article</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Créer le</th>
+                <th>Modifier le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.titre }}</td>
+                <td>{{ article.contenu }}</td>
+                <td>{{ article.createdAt ? article.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>{{ article.updatedAt ? article.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a>
+                    <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-success">Modifier</a>
+                    {{ include('article/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun article disponible.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
